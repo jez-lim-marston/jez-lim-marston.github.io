@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research | Jez Lim Marston, MD, PhD</title>
+<meta name="description" content="Research projects: viral genomics, endogenous retroviruses, single-cell computational biology, and related interests in skin immunology, antiviral immunology, and autoimmunity.">
+<style>
+  :root{
+    --ink:#1a1f24;
+    --muted:#5c6771;
+    --line:#e4e8ec;
+    --bg:#ffffff;
+    --soft:#f6f8fa;
+    --accent:#0f6b6b;
+    --accent-soft:#e5f0ef;
+    --max:820px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.6;
+    font-size:17px;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+  nav{
+    position:sticky;top:0;z-index:10;
+    background:rgba(255,255,255,.9);
+    backdrop-filter:saturate(180%) blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;gap:22px;align-items:center;height:56px;flex-wrap:wrap}
+  nav .brand{font-weight:700;margin-right:auto;color:var(--ink)}
+  nav a{color:var(--muted);font-size:15px;font-weight:500}
+  nav a:hover{color:var(--accent);text-decoration:none}
+  nav a.active{color:var(--accent)}
+
+  .page-head{padding:48px 0 8px}
+  h1{font-size:28px;margin:0 0 8px}
+  .sub{color:var(--muted);font-size:17px;margin:0 0 8px}
+
+  section{padding:34px 0;border-top:1px solid var(--line)}
+  h2{font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 18px}
+  p{margin:0 0 16px}
+
+  .card{
+    border:1px solid var(--line);border-radius:10px;
+    padding:22px 24px;margin-bottom:20px;background:var(--bg);
+  }
+  .card h3{font-size:19px;margin:0 0 2px}
+  .card .subtitle{color:var(--accent);font-size:14px;font-weight:600;margin:0 0 10px}
+  .card .meta{color:var(--muted);font-size:14px;margin:0 0 10px}
+  .card ul{margin:10px 0 0;padding-left:20px}
+  .card li{margin-bottom:6px}
+  .keypaper{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-size:14.5px;color:var(--muted)}
+  .keypaper strong{color:var(--ink)}
+
+  .card.secondary{background:var(--soft);border-style:dashed}
+  .card.secondary .subtitle{color:var(--muted)}
+
+  .pub{margin-bottom:18px}
+  .pub .title{font-weight:600}
+  .pub .cite{color:var(--muted);font-size:15px}
+  .pub .venue{font-style:italic}
+
+  footer{padding:40px 0 60px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+
+  @media (max-width:640px){
+    body{font-size:16px}
+    h1{font-size:24px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand">Jez Lim Marston</span>
+    <a href="index.html">About</a>
+    <a href="research.html" class="active">Research</a>
+    <a href="tools.html">Tools</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-head">
+  <div class="wrap">
+    <h1>Research Projects</h1>
+    <p class="sub">A curated list of work in viral genomics, endogenous retroviruses, and single-cell computational biology, with related and ongoing interests in immunology and biosecurity.</p>
+  </div>
+</div>
+
+<main>
+
+<section id="projects">
+  <div class="wrap">
+    <h2>Primary Projects</h2>
+
+    <div class="card">
+      <h3>scTEQuant: viral &amp; transposable-element quantification</h3>
+      <p class="subtitle">Bayesian quantification &middot; single-cell &amp; bulk RNA-seq</p>
+      <p class="meta">Postdoctoral research, Cesarman Lab, Weill Cornell Medicine</p>
+      <p>A two-stage Bayesian pipeline for quantifying viral and transposable-element transcription from single-cell and bulk RNA-seq, developed with AI-assisted tooling and benchmarked head-to-head against established methods.</p>
+      <ul>
+        <li>Extends genome-wide coverage roughly 280-fold beyond the ceiling where existing methods become computationally intractable</li>
+        <li>Improves quantification accuracy for repetitive and virus-derived loci</li>
+        <li>Built for direct application to EBV and HIV-1 transcriptional profiling</li>
+      </ul>
+      <div class="keypaper"><strong>Key paper:</strong> Reyes-Gopar H*, Marston JL*, et al. (2025). A single-cell transposable element atlas of human cell identity. <em>Cell Reports Methods.</em> *Co-first authors</div>
+    </div>
+
+    <div class="card">
+      <h3>Single-cell viral programs in EBV+ and EBV/HIV lymphoma</h3>
+      <p class="subtitle">Viral latency &amp; reactivation &middot; tumor immunology</p>
+      <p class="meta">Postdoctoral research, Cesarman Lab, Weill Cornell Medicine</p>
+      <p>Resolving EBV lytic-versus-latency programs and HIV-1 transcriptional reservoirs at single-cell resolution across a cohort of EBV+ lymphoma patients, including EBV/HIV co-infected cases.</p>
+      <ul>
+        <li>Maps viral reactivation states onto the tumor and microenvironment transcriptional landscape</li>
+        <li>Characterizes consequences of co-infection in immunocompromised hosts</li>
+        <li>Applies scTEQuant to jointly quantify host, EBV, and HIV-1 transcription</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>A single-cell atlas of endogenous retrovirus expression</h3>
+      <p class="subtitle">HERVs &middot; locus-specific quantification</p>
+      <p class="meta">Doctoral research, Nixon Lab</p>
+      <p>Built the first locus-specific single-cell atlas of transposable element and endogenous retrovirus expression across the human immune system, using the Stellarscope pipeline.</p>
+      <ul>
+        <li>Resolves individual HERV loci rather than family-level aggregates</li>
+        <li>Links HERV expression patterns to specific immune cell identities and states</li>
+        <li>Foundation for downstream work on HERVs in lymphoma subtypes and autoimmune disease</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="related-interests">
+  <div class="wrap">
+    <h2>Related &amp; Ongoing Interests</h2>
+    <p>These areas intersect naturally with my core work on viral latency and endogenous retroviruses. I follow the literature closely, contribute where I can, and expect to develop them into full projects over time.</p>
+
+    <div class="card secondary">
+      <h3>Antiviral immunology</h3>
+      <p class="subtitle">Innate &amp; adaptive control of viral reservoirs</p>
+      <p>How innate sensing and adaptive immune pressure shape EBV and HIV-1 reservoirs, and how single-cell transcriptomics can resolve the immune states that permit or suppress viral reactivation.</p>
+    </div>
+
+    <div class="card secondary">
+      <h3>Skin immunology</h3>
+      <p class="subtitle">Barrier immunity &amp; cutaneous viral latency</p>
+      <p>The skin as a site of immune surveillance and viral latency for herpesviruses, and how resident immune populations at barrier tissues differ from the systemic compartments I study in blood and lymphoid tissue.</p>
+    </div>
+
+    <div class="card secondary">
+      <h3>Autoimmunity</h3>
+      <p class="subtitle">HERV expression &amp; molecular mimicry</p>
+      <p>Associations between endogenous retrovirus expression and autoimmune disease, including molecular mimicry between HERV-encoded antigens and self-antigens as a possible driver of autoreactivity.</p>
+    </div>
+
+    <div class="card secondary">
+      <h3>Computational biology</h3>
+      <p class="subtitle">Methods development &amp; AI-assisted tooling</p>
+      <p>Broader interest in computational methods for single-cell and genomic data, and in using AI tools to accelerate development and benchmarking of new quantification approaches.</p>
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap">
+    <h2>Selected Publications</h2>
+
+    <div class="pub">
+      <div class="title">A single-cell transposable element atlas of human cell identity</div>
+      <div class="cite">Reyes-Gopar H*, Marston JL*, et al. (2025). <span class="venue">Cell Reports Methods.</span> *Co-first authors</div>
+    </div>
+    <div class="pub">
+      <div class="title">Locus-specific human endogenous retroviruses reveal lymphoma subtypes</div>
+      <div class="cite">Singh B, Dopkins N, Fei T, Marston JL, et al. (2025). <span class="venue">iScience.</span></div>
+    </div>
+    <div class="pub">
+      <div class="title">Ribosomal profiling of human endogenous retroviruses in healthy tissues</div>
+      <div class="cite">Dopkins N, Singh B, Marston JL, et al. (2024). <span class="venue">BMC Genomics.</span></div>
+    </div>
+    <div class="pub">
+      <div class="title">How human endogenous retroviruses interact with the microbiota in health and disease</div>
+      <div class="cite">Dopkins N, O'Mara MM, Singh B, Marston JL, Bendall ML, Nixon DF. (2022). <span class="venue">Trends in Microbiology.</span></div>
+    </div>
+    <div class="pub">
+      <div class="title">SARS-CoV-2 infection mediates differential expression of human endogenous retroviruses</div>
+      <div class="cite">Marston JL, Greenig M, et al. (2021). <span class="venue">JCI Insight.</span></div>
+    </div>
+
+    <p style="margin-top:18px"><a href="https://scholar.google.com/citations?user=LsAXqooAAAAJ&hl=en" target="_blank" rel="noopener">Full list on Google Scholar &rarr;</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    &copy; <span id="yr"></span> Jez Lim Marston. Built with plain HTML and CSS.
+  </div>
+</footer>
+
+<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>

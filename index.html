@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jez Lim Marston, MD, PhD | Virologist & Computational Biologist</title>
+<title>Jez Lim Marston, MD, PhD | Virologist &amp; Computational Biologist</title>
 <meta name="description" content="Jez Lim Marston, MD, PhD. Virologist and computational biologist working on viral genomics, endogenous retroviruses, immunology, AI/ML, and the biosecurity of AI-enabled biology.">
 <style>
   :root{
@@ -12,7 +12,7 @@
     --line:#e4e8ec;
     --bg:#ffffff;
     --soft:#f6f8fa;
-    --accent:#0f6b6b;      /* deep teal */
+    --accent:#0f6b6b;
     --accent-soft:#e5f0ef;
     --max:820px;
   }
@@ -31,7 +31,6 @@
   a:hover{text-decoration:underline}
   .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
 
-  /* sticky nav */
   nav{
     position:sticky;top:0;z-index:10;
     background:rgba(255,255,255,.9);
@@ -39,11 +38,11 @@
     border-bottom:1px solid var(--line);
   }
   nav .wrap{display:flex;gap:22px;align-items:center;height:56px;flex-wrap:wrap}
-  nav .brand{font-weight:700;margin-right:auto}
+  nav .brand{font-weight:700;margin-right:auto;color:var(--ink)}
   nav a{color:var(--muted);font-size:15px;font-weight:500}
   nav a:hover{color:var(--accent);text-decoration:none}
+  nav a.active{color:var(--accent)}
 
-  /* header */
   header{padding:56px 0 24px}
   .head-grid{display:flex;gap:32px;align-items:center;flex-wrap:wrap}
   .avatar{
@@ -54,8 +53,8 @@
   h1{font-size:32px;line-height:1.2;margin:0 0 6px}
   .role{color:var(--muted);font-size:18px;margin:0 0 4px}
   .loc{color:var(--muted);font-size:15px;margin:0}
+  .tagline{margin-top:14px;font-size:17px;color:var(--ink)}
 
-  /* social row */
   .social{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
   .social a{
     display:inline-block;padding:6px 13px;font-size:14px;font-weight:500;
@@ -76,16 +75,6 @@
   .interest li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
   .interest li span{display:block;color:var(--muted);font-size:15px}
 
-  .item{margin-bottom:22px}
-  .item .meta{color:var(--muted);font-size:14px;margin:0 0 6px}
-  .tag{display:inline-block;font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);
-       padding:2px 9px;border-radius:6px;margin-right:6px}
-
-  .pub{margin-bottom:18px}
-  .pub .title{font-weight:600}
-  .pub .cite{color:var(--muted);font-size:15px}
-  .pub .venue{font-style:italic}
-
   footer{padding:40px 0 60px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
 
   @media (max-width:640px){
@@ -102,11 +91,10 @@
 <nav>
   <div class="wrap">
     <span class="brand">Jez Lim Marston</span>
-    <a href="#about">About</a>
-    <a href="#research">Research</a>
-    <a href="#software">Software</a>
-    <a href="#publications">Publications</a>
-    <a href="#contact">Contact</a>
+    <a href="index.html" class="active">About</a>
+    <a href="research.html">Research</a>
+    <a href="tools.html">Tools</a>
+    <a href="contact.html">Contact</a>
   </div>
 </nav>
 
@@ -118,6 +106,7 @@
       <h1>Jez Lim Marston, MD, PhD</h1>
       <p class="role">Virologist &amp; Computational Biologist</p>
       <p class="loc">New York, NY</p>
+      <p class="tagline">Interested in viral genomics, endogenous retroviruses, immunology, AI/ML for biology, and the biosecurity of AI-enabled research.</p>
       <div class="social">
         <a href="mailto:jezlim.marston@gmail.com">Email</a>
         <a href="https://www.linkedin.com/in/jez-marston" target="_blank" rel="noopener">LinkedIn</a>
@@ -138,10 +127,11 @@
     <p class="lead">I am a physician-scientist and virologist working where molecular virology, computational genomics, and AI/ML meet, and increasingly where that intersection becomes a biosecurity question.</p>
     <p>My research reconstructs how viruses and virus-derived elements behave in the human genome. As a postdoctoral researcher in the Cesarman Lab at Weill Cornell Medicine, I study EBV+ lymphoma and EBV/HIV co-infection at single-cell resolution. During my PhD in the Nixon Lab, I built the first locus-specific single-cell atlas of transposable element and endogenous retrovirus expression across the human immune system.</p>
     <p>I also work hands-on under BSL-2+ conditions with HIV-1, EBV, and SARS-CoV-2, and I use AI tools in my own research every day. That combination has given me a practical understanding of how AI/ML lowers the technical barrier to dual-use work, and why thoughtful evaluation and guardrails matter. I believe AI can meaningfully advance biomedicine, and that realizing that promise safely depends on people who understand both the biology and the tools.</p>
+    <p>Alongside this core program, I follow and contribute to related work in skin immunology, antiviral immunology, autoimmunity, and computational biology more broadly &mdash; areas that intersect naturally with viral latency, endogenous retroviruses, and immune dysregulation. More on <a href="research.html">Research</a>.</p>
   </div>
 </section>
 
-<section id="research">
+<section id="interests">
   <div class="wrap">
     <h2>Research Interests</h2>
     <ul class="clean interest">
@@ -152,77 +142,6 @@
       <li>Biosafety &amp; biosecurity<span>Dual-use research, misuse-risk evaluation, guardrails for AI-enabled biology</span></li>
       <li>Cancer immunology<span>Viral lymphomagenesis and the tumor transcriptional landscape</span></li>
     </ul>
-  </div>
-</section>
-
-<section id="projects">
-  <div class="wrap">
-    <h2>Current Projects</h2>
-
-    <div class="item">
-      <h3>scTEQuant: viral &amp; transposable-element quantification</h3>
-      <p class="meta">Postdoctoral research, Cesarman Lab</p>
-      <p>A two-stage Bayesian pipeline for quantifying viral and transposable-element transcription from single-cell and bulk RNA-seq. Developed with AI-assisted tooling and benchmarked head-to-head against established methods, it improves accuracy while extending genome-wide coverage roughly 280-fold beyond the ceiling where existing methods become computationally intractable.</p>
-    </div>
-
-    <div class="item">
-      <h3>Single-cell viral programs in EBV+ and EBV/HIV lymphoma</h3>
-      <p class="meta">Postdoctoral research, Cesarman Lab</p>
-      <p>Resolving EBV lytic-versus-latency programs and HIV-1 transcriptional reservoirs at single-cell resolution across a cohort of EBV+ lymphoma patients, including EBV/HIV co-infected cases, to understand viral reactivation and its consequences in immunocompromised hosts.</p>
-    </div>
-  </div>
-</section>
-
-<section id="software">
-  <div class="wrap">
-    <h2>Software &amp; Tools</h2>
-    <div class="item">
-      <p class="meta"><span class="tag">Lead developer</span>scTEQuant</p>
-      <p>Bayesian pipeline for viral and transposable-element quantification from single-cell and bulk RNA-seq.
-        <!-- Add the real repo link, then remove this comment -->
-        <a href="https://github.com/jez-lim-marston" target="_blank" rel="noopener">View on GitHub</a></p>
-    </div>
-    <div class="item">
-      <p class="meta"><span class="tag">Co-developer</span>Stellarscope</p>
-      <p>Locus-specific quantification of transposable element and endogenous retrovirus expression, used to build the first single-cell TE atlas of human cell identity.</p>
-    </div>
-  </div>
-</section>
-
-<section id="publications">
-  <div class="wrap">
-    <h2>Selected Publications</h2>
-
-    <div class="pub">
-      <div class="title">A single-cell transposable element atlas of human cell identity</div>
-      <div class="cite">Reyes-Gopar H*, Marston JL*, et al. (2025). <span class="venue">Cell Reports Methods.</span> *Co-first authors</div>
-    </div>
-    <div class="pub">
-      <div class="title">Locus-specific human endogenous retroviruses reveal lymphoma subtypes</div>
-      <div class="cite">Singh B, Dopkins N, Fei T, Marston JL, et al. (2025). <span class="venue">iScience.</span></div>
-    </div>
-    <div class="pub">
-      <div class="title">Ribosomal profiling of human endogenous retroviruses in healthy tissues</div>
-      <div class="cite">Dopkins N, Singh B, Marston JL, et al. (2024). <span class="venue">BMC Genomics.</span></div>
-    </div>
-    <div class="pub">
-      <div class="title">How human endogenous retroviruses interact with the microbiota in health and disease</div>
-      <div class="cite">Dopkins N, O'Mara MM, Singh B, Marston JL, Bendall ML, Nixon DF. (2022). <span class="venue">Trends in Microbiology.</span></div>
-    </div>
-    <div class="pub">
-      <div class="title">SARS-CoV-2 infection mediates differential expression of human endogenous retroviruses</div>
-      <div class="cite">Marston JL, Greenig M, et al. (2021). <span class="venue">JCI Insight.</span></div>
-    </div>
-
-    <p style="margin-top:18px"><a href="https://scholar.google.com/citations?user=LsAXqooAAAAJ&hl=en" target="_blank" rel="noopener">Full list on Google Scholar &rarr;</a></p>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="wrap">
-    <h2>Contact</h2>
-    <p>I am interested in roles evaluating and mitigating biological risk in frontier AI systems, and more broadly in computational virology, immunology, and translational biotechnology. I am glad to connect.</p>
-    <p><a href="mailto:jezlim.marston@gmail.com">jezlim.marston@gmail.com</a></p>
   </div>
 </section>
 
