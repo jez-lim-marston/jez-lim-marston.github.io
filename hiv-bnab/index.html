@@ -68,6 +68,13 @@
   .card p{margin:0 0 10px}
   .card p:last-child{margin-bottom:0}
 
+  .jump{display:flex;gap:8px 18px;flex-wrap:wrap;margin:22px 0 0;font-size:14.5px}
+  .jump .lbl{color:var(--muted);font-weight:600}
+  .jump a{font-weight:500}
+  .interest-list{list-style:none;padding:0;margin:0}
+  .interest-list li{padding:10px 0;border-bottom:1px solid var(--line)}
+  .interest-list li:last-child{border-bottom:0}
+  .interest-list span{color:var(--muted);display:block;font-size:14.5px}
   .note{font-size:14.5px;color:var(--muted)}
 
   footer{padding:40px 0 60px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
@@ -100,11 +107,25 @@
       <div class="stat"><strong>127</strong>antibody combinations checked</div>
       <div class="stat"><strong>93</strong>Man9 glycans modeled on one spike</div>
     </div>
+    <p class="jump"><span class="lbl">Jump to</span> <a href="#interest">Read by interest</a> <a href="#explorers">Interactive companions</a> <a href="#about-project">About this project</a></p>
     <p style="margin-top:18px"><a class="btn" href="cracking-the-glycan-shield.html">Read the full report &rarr;</a></p>
   </div>
 </div>
 
 <main>
+
+<section id="interest">
+  <div class="wrap">
+    <h2>Read by Interest</h2>
+    <ul class="interest-list">
+      <li><a href="cracking-the-glycan-shield.html#d2-coverage">Which antibodies to combine</a><span>Coverage across 525 real viruses; try it in the <a href="coverage-explorer.html">Coverage Explorer</a>.</span></li>
+      <li><a href="cracking-the-glycan-shield.html#glycan-shield">What the sugar coat hides</a><span>The full-density shield in 3D; also the <a href="full-density-glycan-shield.html">standalone viewer</a>.</span></li>
+      <li><a href="cracking-the-glycan-shield.html#d3-escape">How the virus escapes</a><span>Why sequencing depth hides independent events: <a href="sampling-blind-spot.html">Sampling Blind Spot</a> and <a href="origin-network.html">Origin Network</a>.</span></li>
+      <li><a href="cracking-the-glycan-shield.html#how-the-work-was-done">How the work was done</a><span>The AI-assisted workflow, methods, and caveats.</span></li>
+      <li><a href="cracking-the-glycan-shield.html#public-health-durc-data-sharing">Biosecurity and data sharing</a><span>Public health contribution and dual-use considerations.</span></li>
+    </ul>
+  </div>
+</section>
 
 <section id="explorers">
   <div class="wrap">
