@@ -5,7 +5,7 @@ section[id]{scroll-margin-top:16px}
 .report-index{max-width:calc(var(--col) + 48px);margin:28px auto 8px;padding:0 24px}
 .report-index nav{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 22px;box-shadow:var(--shadow)}
 .report-index .eyebrow{margin:0 0 10px}
-.report-index ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 28px;counter-reset:ri}
+.report-index ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(6,auto);grid-auto-flow:column;gap:6px 28px;counter-reset:ri}
 .report-index li{counter-increment:ri;font-size:15px;line-height:1.35}
 .report-index li::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--signal);margin-right:10px;vertical-align:middle}
 .report-index a{text-decoration:none}
@@ -15,7 +15,7 @@ section[id]{scroll-margin-top:16px}
   background:var(--surface);color:var(--signal);border:1px solid var(--line);border-radius:999px;padding:8px 14px;
   box-shadow:var(--shadow);text-decoration:none;opacity:0;pointer-events:none;transition:opacity .2s}
 .to-index.show{opacity:1;pointer-events:auto}
-@media (max-width:640px){.report-index ol{grid-template-columns:1fr}}
+@media (max-width:640px){.report-index ol{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row}}
 </style></head><body>
 <title>Cracking the Glycan Shield</title>
 <style>
