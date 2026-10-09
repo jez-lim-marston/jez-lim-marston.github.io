@@ -5,91 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Research | Jez Lim Marston, MD, PhD</title>
 <meta name="description" content="Research projects: viral genomics, endogenous retroviruses, single-cell computational biology, and related interests in skin immunology, antiviral immunology, and autoimmunity.">
-<style>
-  :root{
-    --ink:#1a1f24;
-    --muted:#5c6771;
-    --line:#e4e8ec;
-    --bg:#ffffff;
-    --soft:#f6f8fa;
-    --accent:#0f6b6b;
-    --accent-soft:#e5f0ef;
-    --max:820px;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:var(--ink);
-    background:var(--bg);
-    line-height:1.6;
-    font-size:17px;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:var(--accent);text-decoration:none}
-  a:hover{text-decoration:underline}
-  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
-
-  nav{
-    position:sticky;top:0;z-index:10;
-    background:rgba(255,255,255,.9);
-    backdrop-filter:saturate(180%) blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  nav .wrap{display:flex;gap:22px;align-items:center;height:56px;flex-wrap:wrap}
-  nav .brand{font-weight:700;margin-right:auto;color:var(--ink)}
-  nav a{color:var(--muted);font-size:15px;font-weight:500}
-  nav a:hover{color:var(--accent);text-decoration:none}
-  nav a.active{color:var(--accent)}
-
-  .page-head{padding:48px 0 8px}
-  h1{font-size:28px;margin:0 0 8px}
-  .sub{color:var(--muted);font-size:17px;margin:0 0 8px}
-
-  section{padding:34px 0;border-top:1px solid var(--line)}
-  h2{font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 18px}
-  p{margin:0 0 16px}
-
-  .card{
-    border:1px solid var(--line);border-radius:10px;
-    padding:22px 24px;margin-bottom:20px;background:var(--bg);
-  }
-  .card h3{font-size:19px;margin:0 0 2px}
-  .card .subtitle{color:var(--accent);font-size:14px;font-weight:600;margin:0 0 10px}
-  .card .meta{color:var(--muted);font-size:14px;margin:0 0 10px}
-  .card ul{margin:10px 0 0;padding-left:20px}
-  .card li{margin-bottom:6px}
-  .keypaper{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-size:14.5px;color:var(--muted)}
-  .keypaper strong{color:var(--ink)}
-
-  .card.secondary{background:var(--soft);border-style:dashed}
-  .card.secondary .subtitle{color:var(--muted)}
-
-  .pub{margin-bottom:18px}
-  .pub .title{font-weight:600}
-  .pub .cite{color:var(--muted);font-size:15px}
-  .pub .venue{font-style:italic}
-
-  footer{padding:40px 0 60px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
-
-  @media (max-width:640px){
-    body{font-size:16px}
-    h1{font-size:24px}
-  }
-</style>
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
 
-<nav>
-  <div class="wrap">
-    <span class="brand">Jez Lim Marston</span>
-    <a href="index.html">About</a>
-    <a href="research.html" class="active">Research</a>
-    <a href="tools.html">Tools</a>
+<header class="top">
+  <div class="in">
+    <a class="brand" href="index.html">JLM</a>
+    <a href="research.html" class="on">Research</a>
+    <a href="index.html#works"><span class="lg">Selected works</span><span class="sm">Works</span></a>
+    <a href="index.html#about">About</a>
+    <a href="tools.html" class="hide-sm">Tools</a>
+    <a href="https://github.com/jez-lim-marston" target="_blank" rel="noopener" class="hide-sm">Code</a>
     <a href="contact.html">Contact</a>
   </div>
-</nav>
+</header>
 
 <div class="page-head">
   <div class="wrap">
@@ -224,11 +154,7 @@
 
 </main>
 
-<footer>
-  <div class="wrap">
-    &copy; <span id="yr"></span> Jez Lim Marston. Built with plain HTML and CSS.
-  </div>
-</footer>
+<footer>&copy; <span id="yr"></span> Jez Lim Marston. Built with plain HTML and CSS.</footer>
 
 <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
