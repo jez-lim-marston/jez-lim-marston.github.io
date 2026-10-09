@@ -32,6 +32,8 @@
   .env-fig.ready .status{display:none}
   .env-fig.unsupported .status::after{content:" (needs a current browser)"}
   .env-cap{position:absolute;right:6px;bottom:6px;text-align:right;font:11.5px/1.6 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(16,32,28,.55);pointer-events:auto}
+  .env-btns{display:none;position:absolute;right:6px;top:0;z-index:2;gap:6px}
+  .env-tog{font:11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:transparent;border:1px solid var(--line);border-radius:5px;padding:4px 9px;cursor:pointer}
   .env-hint{display:none;position:absolute;left:6px;top:4px;font:11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:rgba(16,32,28,.4)}
   .env-cap a{color:inherit}
   .env-cap a:hover{color:var(--accent);text-decoration:none}
@@ -90,6 +92,7 @@
     .env-fig canvas{touch-action:pan-y;cursor:grab}
     .env-cap{left:6px;right:auto;text-align:left}
     .env-hint{display:block}
+    .env-btns{display:flex}
     .col{max-width:620px}
     section{padding:9vh 0 8vh}
     body{font-size:16.5px}
@@ -120,6 +123,7 @@
   <canvas id="envCanvas"></canvas>
   <div class="status">Loading structure&hellip;</div>
   <div class="env-hint">Swipe to turn</div>
+  <div class="env-btns"><button type="button" class="env-tog" id="envNext">Next Fab</button><button type="button" class="env-tog" id="envTog" aria-pressed="false">Hide Fab</button></div>
   <figcaption class="env-cap">
     <a href="https://www.rcsb.org/structure/5FYJ" target="_blank" rel="noopener">HIV-1 Env trimer &middot; PDB 5FYJ &nearr;</a>
     <span class="fab" id="envFab">Glycan shield only</span>
@@ -286,14 +290,16 @@
     start=research.getBoundingClientRect().top+window.scrollY;
     end=document.documentElement.scrollHeight-window.innerHeight*0.5;
   }
-  var mqS=window.matchMedia('(max-width:900px)');
+  var mqS=window.matchMedia('(max-width:900px)'),fabOff=false,fabIdx=0,nxt=document.getElementById('envNext'),tog=document.getElementById('envTog');
+  tog.addEventListener('click',function(){fabOff=!fabOff;tog.textContent=fabOff?'Show Fab':'Hide Fab';tog.setAttribute('aria-pressed',fabOff);update()});
   function update(){
-    if(mqS.matches){setFab(0);return}
+    if(mqS.matches){setFab(fabOff?-1:fabIdx);return}
     var mid=window.scrollY+window.innerHeight*0.5;
     if(mid<start){setFab(-1);return}
     var p=(mid-start)/Math.max(1,end-start);
     setFab(Math.min(FABS.length-1,Math.floor(p*FABS.length)));
   }
+  nxt.addEventListener('click',function(){fabIdx=(fabIdx+1)%FABS.length;if(fabOff){fabOff=false;tog.textContent='Hide Fab';tog.setAttribute('aria-pressed',false)}update()});
   window.addEventListener('scroll',update,{passive:true});
   window.addEventListener('resize',function(){measure();update()});
   window.addEventListener('load',function(){measure();update()});
