@@ -1,4 +1,4 @@
-/* Spinning 5FYJ Env trimer with a bound Fab that changes with the page section.
+/* 5FYJ Env trimer that turns with scroll, with a bound Fab that changes with the page section.
    Canvas-2D painter's-algorithm renderer (same look as the Virion Portrait companion).
    Public API: window.EnvViewer.setFab('pgt122' | 'vrc01' | 'o22' | null) */
 (function(){
@@ -68,11 +68,12 @@
   function size(){
     var r=fig.getBoundingClientRect();W=Math.max(1,Math.round(r.width));Hh=Math.max(1,Math.round(r.height));
     DPR=Math.min(window.devicePixelRatio||1,1.75);
+    dirty=true;
     cv.width=Math.round(W*DPR);cv.height=Math.round(Hh*DPR);
     if(G)scale=Math.min(W,Hh)/G.ext*1.18;
   }
 
-  var yaw0=0,t0=performance.now(),last=t0;
+  var yaw0=0,yawCur=null,dirty=true,last=performance.now();
   function frame(now){
     requestAnimationFrame(frame);
     if(!ready||!W)return;
@@ -84,7 +85,14 @@
       f.e=f.t*f.t*(3-2*f.t)}
     if(want!==null&&hidKey!==want){hidKey=want;hidden=clashSet(want)}
     if(want===null&&hidKey!=='~'){hidKey='~';hidden={}}
-    var yaw=yaw0+(reduce?0:(now-t0)/1000*0.32)+window.scrollY*0.0016;
+    /* the structure turns only with the reader's scroll, eased so it glides to a stop */
+    var target=yaw0+window.scrollY*0.0016;
+    if(yawCur===null)yawCur=target;
+    var diff=target-yawCur,spinning=Math.abs(diff)>0.0004;
+    if(spinning)yawCur+=diff*Math.min(1,dt*6);else yawCur=target;
+    if(!spinning&&!moving&&!dirty)return;
+    dirty=false;
+    var yaw=yawCur;
     var cyw=Math.cos(yaw),syw=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
     var X=G.X,Y=G.Y,Dp=G.Dp,R=G.R,Cb=G.Cb,n=0,dmin=1e9,dmax=-1e9,i,x,y,z,xs,d0,lm=1+0.22*(stp-1);
     for(i=0;i<H.nP;i+=stp){x=D.px[i];y=D.py[i];z=D.pz[i];xs=x*cyw-y*syw;d0=x*syw+y*cyw;
