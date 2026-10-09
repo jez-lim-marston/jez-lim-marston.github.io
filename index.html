@@ -32,6 +32,7 @@
   .env-fig.ready .status{display:none}
   .env-fig.unsupported .status::after{content:" (needs a current browser)"}
   .env-cap{position:absolute;right:6px;bottom:6px;text-align:right;font:11.5px/1.6 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(16,32,28,.55);pointer-events:auto}
+  .env-hint{display:none;position:absolute;left:6px;top:4px;font:11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:rgba(16,32,28,.4)}
   .env-cap a{color:inherit}
   .env-cap a:hover{color:var(--accent);text-decoration:none}
   .env-cap .fab{display:block;color:var(--accent);transition:opacity .25s}
@@ -84,8 +85,11 @@
 
   /* narrower screens: viewer becomes a soft backdrop */
   @media (max-width:900px){
-    .env-fig{top:56px;left:0;right:0;width:100%;height:calc(100vh - 56px);opacity:.3}
-    .env-cap{display:none}
+    /* small screens: the model sits under the Independent project box, swipe to turn it */
+    .env-fig{position:relative;top:auto;left:auto;right:auto;width:100%;height:320px;margin:18px 0 0;pointer-events:auto}
+    .env-fig canvas{touch-action:pan-y;cursor:grab}
+    .env-cap{left:6px;right:auto;text-align:left}
+    .env-hint{display:block}
     .col{max-width:620px}
     section{padding:9vh 0 8vh}
     body{font-size:16.5px}
@@ -115,6 +119,7 @@
 <figure class="env-fig" id="envFig" aria-label="3D model of the HIV-1 Env trimer (PDB 5FYJ) that rotates as you scroll, with a bound antibody Fab that changes by section">
   <canvas id="envCanvas"></canvas>
   <div class="status">Loading structure&hellip;</div>
+  <div class="env-hint">Swipe to turn</div>
   <figcaption class="env-cap">
     <a href="https://www.rcsb.org/structure/5FYJ" target="_blank" rel="noopener">HIV-1 Env trimer &middot; PDB 5FYJ &nearr;</a>
     <span class="fab" id="envFab">Glycan shield only</span>
@@ -193,6 +198,7 @@
       <span class="a">Independent computational project with an interactive report and five companion explorers.</span>
       <span class="k"><span>HIV-1</span><span>bnAbs</span><span>Glycan shield</span></span>
     </div>
+    <div id="envMount"></div>
   </div>
 </section>
 
@@ -225,8 +231,31 @@
 <footer>&copy; <span id="yr"></span> Jez Lim Marston.</footer>
 
 <noscript><style>.env-fig{display:none}</style></noscript>
-<script src="assets/env-5fyj-data.js?v=10"></script>
-<script src="assets/env-viewer.js?v=10"></script>
+<script>
+/* small screens: no scroll-driven backdrop; the model sits in #envMount, drifts slowly and turns with a swipe */
+(function(){
+  var mq=window.matchMedia('(max-width:900px)'),fig=document.getElementById('envFig'),mount=document.getElementById('envMount'),
+      home=fig.parentNode,next=fig.nextSibling,drag=0,auto=0,down=false,lastX=0,vis=true,
+      still=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  window.EnvYaw=function(dt){
+    if(!mq.matches)return window.scrollY*0.0016;
+    if(vis&&!down&&!still)auto+=dt*0.25;
+    return auto+drag;
+  };
+  function place(){
+    if(mq.matches){mount.appendChild(fig)}else{home.insertBefore(fig,next)}
+  }
+  if(mq.addEventListener)mq.addEventListener('change',place);else mq.addListener(place);
+  place();
+  if('IntersectionObserver' in window)new IntersectionObserver(function(es){vis=es[0].isIntersecting},{rootMargin:'100px'}).observe(fig);
+  var cv=document.getElementById('envCanvas');
+  cv.addEventListener('pointerdown',function(e){if(!mq.matches)return;down=true;lastX=e.clientX;try{cv.setPointerCapture(e.pointerId)}catch(_){}});
+  cv.addEventListener('pointermove',function(e){if(!down)return;drag+=(e.clientX-lastX)*0.012;lastX=e.clientX});
+  ['pointerup','pointercancel'].forEach(function(t){cv.addEventListener(t,function(){down=false})});
+})();
+</script>
+<script src="assets/env-5fyj-data.js?v=11"></script>
+<script src="assets/env-viewer.js?v=11"></script>
 <script>
 (function(){
   document.getElementById('yr').textContent=new Date().getFullYear();
@@ -257,7 +286,9 @@
     start=research.getBoundingClientRect().top+window.scrollY;
     end=document.documentElement.scrollHeight-window.innerHeight*0.5;
   }
+  var mqS=window.matchMedia('(max-width:900px)');
   function update(){
+    if(mqS.matches){setFab(0);return}
     var mid=window.scrollY+window.innerHeight*0.5;
     if(mid<start){setFab(-1);return}
     var p=(mid-start)/Math.max(1,end-start);

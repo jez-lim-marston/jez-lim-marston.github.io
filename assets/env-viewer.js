@@ -11,7 +11,7 @@
   function fallback(why){
     if(why)console.warn('Env viewer: using CPU renderer ('+why+')');
     var nc=cv.cloneNode(false);cv.parentNode.replaceChild(nc,cv);
-    var s=document.createElement('script');s.src='assets/env-viewer-cpu.js?v=10';document.head.appendChild(s);
+    var s=document.createElement('script');s.src='assets/env-viewer-cpu.js?v=11';document.head.appendChild(s);
   }
   var probe=document.createElement('canvas'),ok=false;
   try{ok=!!probe.getContext('webgl2')}catch(e){}
@@ -211,8 +211,9 @@
     if(want!==null&&hidKey!==want){hidKey=want;hidden=clashSet(want);uploadGlycans(hidden)}
     if(want===null&&hidKey!=='~'){hidKey='~';hidden={};uploadGlycans(hidden)}
     /* the structure turns only with the reader's scroll, eased so it glides to a stop */
-    var target=window.scrollY*0.0016;
+    var target=window.EnvYaw?window.EnvYaw(dt):window.scrollY*0.0016;
     if(yawCur===null)yawCur=target;
+    if(target!==yawCur)dirty=true;
     var diff=target-yawCur,spinning=Math.abs(diff)>0.0004;
     if(spinning)yawCur+=diff*Math.min(1,dt*6);else yawCur=target;
     var inMotion=spinning||moving;

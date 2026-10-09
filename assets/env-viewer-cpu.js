@@ -116,8 +116,9 @@
     if(want!==null&&hidKey!==want){hidKey=want;hidden=clashSet(want)}
     if(want===null&&hidKey!=='~'){hidKey='~';hidden={}}
     /* the structure turns only with the reader's scroll, eased so it glides to a stop */
-    var target=window.scrollY*0.0016;
+    var target=window.EnvYaw?window.EnvYaw(dt):window.scrollY*0.0016;
     if(yawCur===null)yawCur=target;
+    if(target!==yawCur)dirty=true;
     var diff=target-yawCur,spinning=Math.abs(diff)>0.0004;
     if(spinning)yawCur+=diff*Math.min(1,dt*6);else yawCur=target;
     var inMotion=spinning||moving;
