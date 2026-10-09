@@ -4,155 +4,236 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jez Lim Marston, MD, PhD | Virologist &amp; Computational Biologist</title>
-<meta name="description" content="Jez Lim Marston, MD, PhD. Virologist and computational biologist working on viral genomics, endogenous retroviruses, immunology, AI/ML, and the biosecurity of AI-enabled biology.">
+<meta name="description" content="Jez Lim Marston, MD, PhD. Physician-scientist working on viral genomics, endogenous retroviruses, single-cell computational biology, and the biosecurity of AI-enabled biology.">
 <style>
   :root{
-    --ink:#1a1f24;
-    --muted:#5c6771;
-    --line:#e4e8ec;
-    --bg:#ffffff;
-    --soft:#f6f8fa;
-    --accent:#0f6b6b;
-    --accent-soft:#e5f0ef;
-    --max:820px;
+    --paper:#e9ece8;
+    --ink:#10201c;
+    --muted:#4d5f59;
+    --line:#cdd5d0;
+    --accent:#1f6f66;
+    --accent-soft:#d9e8e4;
+    --serif:"Newsreader","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:var(--ink);
-    background:var(--bg);
-    line-height:1.6;
-    font-size:17px;
-    -webkit-font-smoothing:antialiased;
-  }
+  html{scroll-behavior:smooth;scroll-padding-top:70px}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
   a{color:var(--accent);text-decoration:none}
   a:hover{text-decoration:underline}
-  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
 
-  nav{
-    position:sticky;top:0;z-index:10;
-    background:rgba(255,255,255,.9);
-    backdrop-filter:saturate(180%) blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  nav .wrap{display:flex;gap:22px;align-items:center;height:56px;flex-wrap:wrap}
-  nav .brand{font-weight:700;margin-right:auto;color:var(--ink)}
-  nav a{color:var(--muted);font-size:15px;font-weight:500}
-  nav a:hover{color:var(--accent);text-decoration:none}
-  nav a.active{color:var(--accent)}
+  /* fixed structure viewer (right) */
+  .env-fig{position:fixed;top:64px;right:3vw;width:min(54vw,760px);height:calc(100vh - 88px);margin:0;z-index:0;pointer-events:none}
+  .env-fig canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .8s}
+  .env-fig.ready canvas{opacity:1}
+  .env-fig .status{position:absolute;inset:0;display:grid;place-items:center;font:12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(16,32,28,.45)}
+  .env-fig.ready .status{display:none}
+  .env-fig.unsupported .status::after{content:" (needs a current browser)"}
+  .env-cap{position:absolute;right:6px;bottom:6px;text-align:right;font:12px/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(16,32,28,.62);pointer-events:auto}
+  .env-cap a{color:inherit}
+  .env-cap a:hover{color:var(--accent);text-decoration:none}
+  .env-cap .fab{display:block;color:var(--accent);transition:opacity .25s}
 
-  header{padding:56px 0 24px}
-  .head-grid{display:flex;gap:32px;align-items:center;flex-wrap:wrap}
-  .avatar{
-    width:132px;height:132px;border-radius:50%;
-    object-fit:cover;background:var(--soft);
-    border:1px solid var(--line);flex:none;
-  }
-  h1{font-size:32px;line-height:1.2;margin:0 0 6px}
-  .role{color:var(--muted);font-size:18px;margin:0 0 4px}
-  .loc{color:var(--muted);font-size:15px;margin:0}
-  .tagline{margin-top:14px;font-size:17px;color:var(--ink)}
+  /* top bar */
+  .top{position:sticky;top:0;z-index:20;background:rgba(233,236,232,.88);backdrop-filter:saturate(160%) blur(8px);border-bottom:1px solid var(--line)}
+  .top .in{display:flex;align-items:center;gap:22px;height:56px;padding:0 max(24px,3vw);flex-wrap:wrap;overflow:hidden}
+  .top .brand{font:700 16px var(--serif);letter-spacing:.04em;margin-right:auto;color:var(--ink)}
+  .top a{font-size:14.5px;font-weight:500;color:var(--muted)}
+  .top a:hover,.top a.on{color:var(--accent);text-decoration:none}
 
-  .social{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-  .social a{
-    display:inline-block;padding:6px 13px;font-size:14px;font-weight:500;
-    color:var(--ink);background:var(--soft);border:1px solid var(--line);
-    border-radius:999px;
-  }
-  .social a:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);text-decoration:none}
-
-  section{padding:34px 0;border-top:1px solid var(--line)}
-  h2{font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 18px}
-  h3{font-size:18px;margin:0 0 4px}
+  /* text column (left) */
+  main{position:relative;z-index:1;padding:0 max(24px,3vw)}
+  .col{max-width:min(560px,42vw)}
+  section{padding:11vh 0 10vh}
+  section#top{padding-top:13vh;min-height:78vh}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;line-height:1.1;margin:0}
+  h1{font-size:clamp(2.5rem,5vw,3.7rem);margin-bottom:14px}
+  h2{font-size:clamp(1.9rem,3.2vw,2.4rem);margin-bottom:22px}
+  h3{font-size:1.3rem;margin:30px 0 8px}
+  .role{font:500 13px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+  .tag{font:italic 400 1.45rem/1.3 var(--serif);margin:0 0 20px}
   p{margin:0 0 16px}
-  .lead{font-size:18px}
+  .lede{font-size:1.05rem;color:var(--muted)}
+  .contact-row{display:flex;gap:8px 20px;flex-wrap:wrap;margin-top:26px;font:500 13px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+  .contact-row a{color:var(--ink)}
+  .contact-row a:hover{color:var(--accent);text-decoration:none}
+  .hint{margin-top:34px;font:12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:rgba(16,32,28,.5)}
 
-  ul.clean{list-style:none;padding:0;margin:0}
-  .interest{display:grid;grid-template-columns:1fr 1fr;gap:14px 28px}
-  .interest li{padding-left:18px;position:relative;color:var(--ink)}
-  .interest li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;border-radius:50%;background:var(--accent)}
-  .interest li span{display:block;color:var(--muted);font-size:15px}
+  .works{list-style:none;margin:0;padding:0}
+  .works li{padding:18px 0;border-top:1px solid var(--line)}
+  .works li:first-child{border-top:0;padding-top:0}
+  .works .t{font:600 1.12rem/1.3 var(--serif);display:block;margin-bottom:4px}
+  .works .a{font-size:14.5px;color:var(--muted);display:block}
+  .works .v{font-size:14.5px;font-style:italic}
+  .works .k{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .works .k span{font:11.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;background:var(--accent-soft);color:var(--accent);padding:2px 8px;border-radius:5px}
+  .works li.lead .t{font-size:1.35rem}
+  .more{font:500 13px var(--mono);letter-spacing:.08em;text-transform:uppercase}
 
-  footer{padding:40px 0 60px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+  footer{position:relative;z-index:1;padding:30px max(24px,3vw) 50px;color:var(--muted);font-size:13.5px}
 
-  @media (max-width:640px){
-    body{font-size:16px}
-    h1{font-size:26px}
-    .interest{grid-template-columns:1fr}
-    .head-grid{gap:20px}
-    .avatar{width:104px;height:104px}
+  /* narrower screens: viewer becomes a soft backdrop */
+  @media (max-width:900px){
+    .env-fig{top:56px;left:0;right:0;width:100%;height:calc(100vh - 56px);opacity:.3}
+    .env-cap{display:none}
+    .col{max-width:620px}
+    section{padding:9vh 0 8vh}
+    body{font-size:16.5px}
+    .top .in{gap:14px}
+    .top a.hide-sm{display:none}
   }
+  .top a .sm{display:none}
+  @media (max-width:560px){.top .in{flex-wrap:nowrap;gap:15px}.top a{font-size:14px}.top a .lg{display:none}.top a .sm{display:inline}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="wrap">
-    <span class="brand">Jez Lim Marston</span>
-    <a href="index.html" class="active">About</a>
-    <a href="research.html">Research</a>
-    <a href="tools.html">Tools</a>
-    <a href="contact.html">Contact</a>
-  </div>
-</nav>
-
-<header>
-  <div class="wrap head-grid">
-    <!-- Replace profile.jpg with your headshot (square image, ~400x400px, placed in this folder) -->
-    <img class="avatar" src="profile.jpg" alt="Jez Lim Marston" onerror="this.style.visibility='hidden'">
-    <div>
-      <h1>Jez Lim Marston, MD, PhD</h1>
-      <p class="role">Virologist &amp; Computational Biologist</p>
-      <p class="loc">New York, NY</p>
-      <p class="tagline">Interested in viral genomics, endogenous retroviruses, immunology, AI/ML for biology, and the biosecurity of AI-enabled research.</p>
-      <div class="social">
-        <a href="mailto:jezlim.marston@gmail.com">Email</a>
-        <a href="https://www.linkedin.com/in/jez-marston" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://github.com/jez-lim-marston" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://scholar.google.com/citations?user=LsAXqooAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
-        <a href="https://www.researchgate.net/profile/jez-marston" target="_blank" rel="noopener">ResearchGate</a>
-        <a href="https://orcid.org/0000-0001-9784-7926" target="_blank" rel="noopener">ORCID</a>
-      </div>
-    </div>
+<header class="top">
+  <div class="in">
+    <a class="brand" href="#top">JLM</a>
+    <a href="#research" data-nav="research">Research</a>
+    <a href="#works" data-nav="works"><span class="lg">Selected works</span><span class="sm">Works</span></a>
+    <a href="#about" data-nav="about">About</a>
+    <a href="tools.html" class="hide-sm">Tools</a>
+    <a href="https://github.com/jez-lim-marston" target="_blank" rel="noopener" class="hide-sm">Code</a>
+    <a href="#contact" data-nav="contact">Contact</a>
   </div>
 </header>
 
+<figure class="env-fig" id="envFig" aria-label="Rotating 3D model of the HIV-1 Env trimer (PDB 5FYJ) with a bound antibody Fab that changes as you scroll">
+  <canvas id="envCanvas"></canvas>
+  <div class="status">Loading structure&hellip;</div>
+  <figcaption class="env-cap">
+    <a href="https://www.rcsb.org/structure/5FYJ" target="_blank" rel="noopener">Env trimer &middot; PDB 5FYJ &nearr;</a>
+    <span class="fab" id="envFab">Glycan shield only</span>
+  </figcaption>
+</figure>
+
 <main>
 
-<section id="about">
-  <div class="wrap">
-    <h2>About</h2>
-    <p class="lead">I am a physician-scientist and virologist working where molecular virology, computational genomics, and AI/ML meet, and increasingly where that intersection becomes a biosecurity question.</p>
-    <p>My research reconstructs how viruses and virus-derived elements behave in the human genome. As a postdoctoral researcher in the Cesarman Lab at Weill Cornell Medicine, I study EBV+ lymphoma and EBV/HIV co-infection at single-cell resolution. During my PhD in the Nixon Lab, I built the first locus-specific single-cell atlas of transposable element and endogenous retrovirus expression across the human immune system.</p>
-    <p>I also work hands-on under BSL-2+ conditions with HIV-1, EBV, and SARS-CoV-2, and I use AI tools in my own research every day. That combination has given me a practical understanding of how AI/ML lowers the technical barrier to dual-use work, and why thoughtful evaluation and guardrails matter. I believe AI can meaningfully advance biomedicine, and that realizing that promise safely depends on people who understand both the biology and the tools.</p>
-    <p>Alongside this core program, I follow and contribute to related work in skin immunology, antiviral immunology, autoimmunity, and computational biology more broadly &mdash; areas that intersect naturally with viral latency, endogenous retroviruses, and immune dysregulation. More on <a href="research.html">Research</a>.</p>
+<section id="top" data-fab="none" data-label="Glycan shield only">
+  <div class="col">
+    <p class="role">Physician-scientist &middot; Weill Cornell Medicine</p>
+    <h1>Jez Lim Marston</h1>
+    <p class="tag">Tracking viruses, and the viral DNA we already carry.</p>
+    <p class="lede">MD, PhD. I work where molecular virology, single-cell genomics, and AI meet, and increasingly where that intersection becomes a biosecurity question. Postdoctoral researcher in the Cesarman Lab, studying EBV and HIV in lymphoma.</p>
+    <div class="contact-row">
+      <a href="mailto:jezlim.marston@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/jez-marston" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/jez-lim-marston" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://scholar.google.com/citations?user=LsAXqooAAAAJ&hl=en" target="_blank" rel="noopener">Scholar</a>
+      <a href="https://orcid.org/0000-0001-9784-7926" target="_blank" rel="noopener">ORCID</a>
+    </div>
+    <p class="hint">Scroll &darr; the antibody on the model changes</p>
   </div>
 </section>
 
-<section id="interests">
-  <div class="wrap">
-    <h2>Research Interests</h2>
-    <ul class="clean interest">
-      <li>Viral genomics &amp; transcription<span>EBV latency and lytic reactivation, HIV-1 reservoirs, host-pathogen interaction</span></li>
-      <li>Endogenous retroviruses (HERVs)<span>Locus-specific expression, evolution, and ancestral sequence reconstruction</span></li>
-      <li>Single-cell &amp; computational biology<span>scRNA-seq, scATAC-seq, Bayesian quantification, regulatory inference</span></li>
-      <li>AI/ML for biology<span>AI-assisted tool development and benchmarking for viral and TE quantification</span></li>
-      <li>Biosafety &amp; biosecurity<span>Dual-use research, misuse-risk evaluation, guardrails for AI-enabled biology</span></li>
-      <li>Cancer immunology<span>Viral lymphomagenesis and the tumor transcriptional landscape</span></li>
+<section id="research" data-fab="pgt122" data-label="PGT122 Fab &middot; V3-glycan site">
+  <div class="col">
+    <h2>Research.</h2>
+    <h3>Viral DNA in our genomes</h3>
+    <p>Endogenous retroviruses are the fossil remains of ancient infections, and they are still expressed in human cells. In the Nixon Lab I built the first locus-specific single-cell atlas of transposable element and endogenous retrovirus expression across the human immune system, and showed that locus-level HERV expression can tell lymphoma subtypes apart.</p>
+    <h3>Viral programs in lymphoma</h3>
+    <p>In the Cesarman Lab I resolve EBV lytic and latent programs, and HIV-1 transcription, at single-cell resolution across EBV+ lymphoma, including EBV/HIV co-infected patients.</p>
+    <h3>Quantifying at scale</h3>
+    <p>I lead development of scTEQuant, a Bayesian pipeline for locus-specific viral and transposable-element quantification from single-cell and bulk RNA-seq, and co-develop Stellarscope. The scTEQuant manuscript is in preparation and its code is private until publication. <a href="tools.html">Tools &rarr;</a></p>
+    <h3>AI and biosecurity</h3>
+    <p>I use AI tools in my own research every day, so I think about how they lower the technical barrier to dual-use biology and why evaluation and guardrails matter. As an independent project I mapped how six HIV antibodies get through the virus's sugar shield, the model you are looking at. <a href="hiv-bnab/index.html">Cracking the Glycan Shield &rarr;</a></p>
+    <p class="lede">I also follow skin immunology, antiviral immunology, and autoimmunity, which meet my work on viral latency and endogenous retroviruses. <a href="research.html">Full research page &rarr;</a></p>
+  </div>
+</section>
+
+<section id="works" data-fab="vrc01" data-label="VRC01 Fv &middot; CD4 binding site">
+  <div class="col">
+    <h2>Selected works.</h2>
+    <p class="more"><a href="https://scholar.google.com/citations?user=LsAXqooAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar &nearr;</a></p>
+    <ul class="works">
+      <li class="lead">
+        <span class="t">A single-cell transposable element atlas of human cell identity</span>
+        <span class="a">Reyes-Gopar H*, Marston JL*, et al. <span class="v">Cell Reports Methods</span>, 2025. *Co-first authors</span>
+        <span class="k"><span>Single-cell</span><span>Transposable elements</span><span>Stellarscope</span></span>
+      </li>
+      <li>
+        <span class="t">Locus-specific human endogenous retroviruses reveal lymphoma subtypes</span>
+        <span class="a">Singh B, Dopkins N, Fei T, Marston JL, et al. <span class="v">iScience</span>, 2025.</span>
+        <span class="k"><span>HERVs</span><span>Lymphoma</span></span>
+      </li>
+      <li>
+        <span class="t">Ribosomal profiling of human endogenous retroviruses in healthy tissues</span>
+        <span class="a">Dopkins N, Singh B, Marston JL, et al. <span class="v">BMC Genomics</span>, 2024.</span>
+        <span class="k"><span>HERVs</span><span>Translation</span></span>
+      </li>
+      <li>
+        <span class="t">How human endogenous retroviruses interact with the microbiota in health and disease</span>
+        <span class="a">Dopkins N, O'Mara MM, Singh B, Marston JL, Bendall ML, Nixon DF. <span class="v">Trends in Microbiology</span>, 2022.</span>
+        <span class="k"><span>HERVs</span><span>Microbiome</span></span>
+      </li>
+      <li>
+        <span class="t">SARS-CoV-2 infection mediates differential expression of human endogenous retroviruses</span>
+        <span class="a">Marston JL, Greenig M, et al. <span class="v">JCI Insight</span>, 2021.</span>
+        <span class="k"><span>SARS-CoV-2</span><span>HERVs</span></span>
+      </li>
+      <li>
+        <span class="t"><a href="hiv-bnab/index.html">Cracking the Glycan Shield</a></span>
+        <span class="a">Independent computational project with an interactive report and five companion explorers.</span>
+        <span class="k"><span>HIV-1</span><span>bnAbs</span><span>Glycan shield</span></span>
+      </li>
     </ul>
+  </div>
+</section>
+
+<section id="about" data-fab="o22" data-label="35O22 Fab &middot; gp120-gp41 interface">
+  <div class="col">
+    <h2>About.</h2>
+    <p>I am a physician-scientist and virologist. My research reconstructs how viruses and virus-derived elements behave in the human genome, from endogenous retroviruses in the immune system to EBV and HIV in lymphoma.</p>
+    <p>I work hands-on under BSL-2+ conditions with HIV-1, EBV, and SARS-CoV-2. That, together with daily use of AI tools, has given me a practical sense of how AI lowers the barrier to dual-use work. I believe AI can meaningfully advance biomedicine, and that doing so safely depends on people who understand both the biology and the tools.</p>
+    <p>I am interested in roles evaluating and mitigating biological risk in frontier AI systems, and more broadly in computational virology, immunology, and translational biotechnology.</p>
+  </div>
+</section>
+
+<section id="contact" data-fab="none" data-label="Glycan shield only">
+  <div class="col">
+    <h2>Contact.</h2>
+    <p>I am glad to connect.</p>
+    <p><a href="mailto:jezlim.marston@gmail.com">jezlim.marston@gmail.com</a></p>
+    <div class="contact-row">
+      <a href="https://www.linkedin.com/in/jez-marston" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/jez-lim-marston" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://scholar.google.com/citations?user=LsAXqooAAAAJ&hl=en" target="_blank" rel="noopener">Scholar</a>
+      <a href="https://www.researchgate.net/profile/jez-marston" target="_blank" rel="noopener">ResearchGate</a>
+      <a href="https://orcid.org/0000-0001-9784-7926" target="_blank" rel="noopener">ORCID</a>
+    </div>
   </div>
 </section>
 
 </main>
 
-<footer>
-  <div class="wrap">
-    &copy; <span id="yr"></span> Jez Lim Marston. Built with plain HTML and CSS.
-  </div>
-</footer>
+<footer>&copy; <span id="yr"></span> Jez Lim Marston.</footer>
 
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+<noscript><style>.env-fig{display:none}</style></noscript>
+<script src="assets/env-5fyj-data.js"></script>
+<script src="assets/env-viewer.js"></script>
+<script>
+(function(){
+  document.getElementById('yr').textContent=new Date().getFullYear();
+  var secs=[].slice.call(document.querySelectorAll('main section[data-fab]')),
+      cap=document.getElementById('envFab'),links=[].slice.call(document.querySelectorAll('[data-nav]')),cur=null;
+  function activate(s){
+    if(cur===s)return;cur=s;
+    var f=s.getAttribute('data-fab');
+    if(window.EnvViewer)window.EnvViewer.setFab(f==='none'?null:f);
+    cap.style.opacity=0;setTimeout(function(){cap.innerHTML=s.getAttribute('data-label');cap.style.opacity=1},180);
+    links.forEach(function(a){a.classList.toggle('on',a.getAttribute('data-nav')===s.id)});
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)activate(e.target)})},{rootMargin:'-45% 0px -50% 0px'});
+    secs.forEach(function(s){io.observe(s)});
+  }
+  activate(secs[0]);
+})();
+</script>
 </body>
 </html>
