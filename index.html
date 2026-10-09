@@ -25,13 +25,13 @@
   a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
 
   /* fixed structure viewer (right) */
-  .env-fig{position:fixed;top:64px;right:3vw;width:min(54vw,760px);height:calc(100vh - 88px);margin:0;z-index:0;pointer-events:none}
+  .env-fig{position:fixed;top:64px;right:2vw;width:33vw;height:calc(100vh - 88px);margin:0;z-index:0;pointer-events:none}
   .env-fig canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .8s}
   .env-fig.ready canvas{opacity:1}
   .env-fig .status{position:absolute;inset:0;display:grid;place-items:center;font:12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(16,32,28,.45)}
   .env-fig.ready .status{display:none}
   .env-fig.unsupported .status::after{content:" (needs a current browser)"}
-  .env-cap{position:absolute;right:6px;bottom:6px;text-align:right;font:12px/1.6 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(16,32,28,.62);pointer-events:auto}
+  .env-cap{position:absolute;right:6px;bottom:6px;text-align:right;font:11.5px/1.6 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(16,32,28,.55);pointer-events:auto}
   .env-cap a{color:inherit}
   .env-cap a:hover{color:var(--accent);text-decoration:none}
   .env-cap .fab{display:block;color:var(--accent);transition:opacity .25s}
@@ -45,7 +45,7 @@
 
   /* text column (left) */
   main{position:relative;z-index:1;padding:0 max(24px,3vw)}
-  .col{max-width:min(560px,42vw)}
+  .col{max-width:min(720px,60vw)}
   section{padding:11vh 0 10vh}
   section#top{padding-top:13vh;min-height:78vh}
   h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;line-height:1.1;margin:0}
@@ -215,8 +215,8 @@
 <footer>&copy; <span id="yr"></span> Jez Lim Marston.</footer>
 
 <noscript><style>.env-fig{display:none}</style></noscript>
-<script src="assets/env-5fyj-data.js?v=3"></script>
-<script src="assets/env-viewer.js?v=3"></script>
+<script src="assets/env-5fyj-data.js?v=5"></script>
+<script src="assets/env-viewer.js?v=5"></script>
 <script>
 (function(){
   document.getElementById('yr').textContent=new Date().getFullYear();
