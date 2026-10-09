@@ -16,6 +16,12 @@ section[id]{scroll-margin-top:16px}
   box-shadow:var(--shadow);text-decoration:none;opacity:0;pointer-events:none;transition:opacity .2s}
 .to-index.show{opacity:1;pointer-events:auto}
 @media (max-width:640px){.report-index ol{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row}}
+
+/* ---------- AUTHOR BYLINE (site addition) ---------- */
+.byline-tr{position:absolute;top:20px;right:24px;z-index:3;font-family:'Plex Mono','IBM Plex Mono',ui-monospace,monospace;
+  font-size:12.5px;letter-spacing:.02em;color:var(--ghost);text-align:right;max-width:calc(100% - 48px)}
+.byline-tr a{color:inherit;text-decoration:none}
+.byline-tr a:hover{color:var(--signal);text-decoration:underline}
 </style></head><body>
 <title>Cracking the Glycan Shield</title>
 <style>
@@ -284,7 +290,7 @@ ul.plain li{margin-bottom:6px}
 </style>
 
 <!-- ============================================================ HERO ============================================================ -->
-<div class="hero">
+<div class="hero"><div class="byline-tr"><a href="index.html">Dr. Jez Lim Marston, MD, PhD</a></div>
   <div class="shield-field" aria-hidden="true">
     <svg viewBox="0 0 740 520" preserveAspectRatio="xMidYMid slice">
       <g stroke="var(--signal)" stroke-width="1" fill="none" opacity="0.4">
