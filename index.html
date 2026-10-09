@@ -186,7 +186,7 @@
       </li>
     </ul>
     <div class="indep">
-      <span class="lbl">Independent project &middot; not peer reviewed</span>
+      <span class="lbl">Independent project</span>
       <span class="t"><a href="hiv-bnab/index.html">Cracking the Glycan Shield</a></span>
       <span class="a"><strong>Marston JL</strong>. <span class="v">Interactive web report</span>. Available online, 2026.</span>
       <span class="a">Independent computational project with an interactive report and five companion explorers.</span>
@@ -230,12 +230,11 @@
 (function(){
   document.getElementById('yr').textContent=new Date().getFullYear();
   var secs=[].slice.call(document.querySelectorAll('main section[data-fab]')),
-      cap=document.getElementById('envFab'),links=[].slice.call(document.querySelectorAll('[data-nav]')),cur=null;
+      cap=document.getElementById('envFab'),links=[].slice.call(document.querySelectorAll('[data-nav]')),cur=null,
+      research=document.getElementById('research');
+  /* nav highlight follows the section in view */
   function activate(s){
     if(cur===s)return;cur=s;
-    var f=s.getAttribute('data-fab');
-    if(window.EnvViewer)window.EnvViewer.setFab(f==='none'?null:f);
-    cap.style.opacity=0;setTimeout(function(){cap.innerHTML=s.getAttribute('data-label');cap.style.opacity=1},180);
     links.forEach(function(a){a.classList.toggle('on',a.getAttribute('data-nav')===s.id)});
   }
   if('IntersectionObserver' in window){
@@ -243,6 +242,30 @@
     secs.forEach(function(s){io.observe(s)});
   }
   activate(secs[0]);
+  /* the antibody follows scroll distance, not section length: each Fab gets an equal third of the page below the intro */
+  var FABS=[{k:'pgt122',t:'PGT122 Fab &middot; V3-glycan site'},{k:'vrc01',t:'VRC01 Fv &middot; CD4 binding site'},{k:'o22',t:'35O22 Fab &middot; gp120-gp41 interface'}],
+      NONE='Glycan shield only',curFab=-2;
+  function setFab(i){
+    if(i===curFab)return;curFab=i;
+    if(window.EnvViewer)window.EnvViewer.setFab(i<0?null:FABS[i].k);
+    var label=i<0?NONE:FABS[i].t;
+    cap.style.opacity=0;setTimeout(function(){cap.innerHTML=label;cap.style.opacity=1},180);
+  }
+  var start=0,end=1;
+  function measure(){
+    start=research.getBoundingClientRect().top+window.scrollY;
+    end=document.documentElement.scrollHeight-window.innerHeight*0.5;
+  }
+  function update(){
+    var mid=window.scrollY+window.innerHeight*0.5;
+    if(mid<start){setFab(-1);return}
+    var p=(mid-start)/Math.max(1,end-start);
+    setFab(Math.min(FABS.length-1,Math.floor(p*FABS.length)));
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',function(){measure();update()});
+  window.addEventListener('load',function(){measure();update()});
+  measure();update();
 })();
 </script>
 </body>

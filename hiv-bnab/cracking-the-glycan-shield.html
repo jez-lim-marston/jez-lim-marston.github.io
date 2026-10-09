@@ -22,6 +22,11 @@ section[id]{scroll-margin-top:16px}
   font-size:12.5px;letter-spacing:.02em;color:var(--ghost);text-align:right;max-width:calc(100% - 48px)}
 .byline-tr a{color:inherit;text-decoration:none}
 .byline-tr a:hover{color:var(--signal);text-decoration:underline}
+
+/* ---------- PEER REVIEW NOTE (site addition) ---------- */
+.peer-note-wrap{max-width:calc(var(--col) + 48px);margin:14px auto 0;padding:0 24px}
+.peer-note{border-left:3px solid var(--escape);background:var(--surface);border-radius:0 8px 8px 0;padding:12px 16px;font-size:14.5px;line-height:1.55;color:var(--ink);box-shadow:var(--shadow)}
+.peer-note strong{font-family:'Plex Mono','IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--escape);display:block;margin-bottom:4px;font-weight:500}
 </style></head><body>
 <title>Cracking the Glycan Shield</title>
 <style>
@@ -326,6 +331,7 @@ ul.plain li{margin-bottom:6px}
 
 <!-- ============================================================ THE PROBLEM ============================================================ -->
 <div class="report-index" id="report-index"><nav aria-label="Report sections"><div class="eyebrow">In this report</div><ol><li><a href="#why-it-matters">Why this matters</a></li><li><a href="#what-a-bnab-sees">What a bnAb is looking at</a></li><li><a href="#deliverables">Three deliverables, three outcomes</a></li><li><a href="#d1-ic50">01 Sequence-to-IC50 prediction</a></li><li><a href="#d2-coverage">02 Combination selection for coverage</a></li><li><a href="#d3-escape">03 Modeling viral escape</a></li><li><a href="#same-ceiling">The same ceiling, from two directions</a></li><li><a href="#epitope-atlas">The spike in real coordinates</a></li><li><a href="#glycan-shield">Turn the shield on and off</a></li><li><a href="#how-the-work-was-done">Working with Claude models</a></li><li><a href="#public-health-durc-data-sharing">Public health, biosecurity and data sharing</a></li><li><a href="#references">Literature, data, and software</a></li></ol><p class="ri-back"><a href="index.html">&larr; Project page and companion explorers</a></p></nav></div>
+<div class="peer-note-wrap"><div class="peer-note"><strong>Not peer reviewed</strong>This report is independent computational work and has not been through peer review. I welcome scrutiny. If you work on HIV antibodies, glycan shields, or viral escape and you find an error, a questionable assumption, or a better way to test a result, please write to <a href="mailto:jezlim.marston@gmail.com?subject=Cracking%20the%20Glycan%20Shield%3A%20review%20comments">jezlim.marston@gmail.com</a>.</div></div>
 <section class="wrap" id="why-it-matters">
   <div class="section-head">
     <span class="eyebrow">Why this matters</span>
