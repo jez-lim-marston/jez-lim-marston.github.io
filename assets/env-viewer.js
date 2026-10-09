@@ -75,7 +75,7 @@
     if(G)scale=Math.min(W,Hh)/G.ext*1.05;
   }
 
-  var yaw0=0,yawCur=null,dirty=true,last=performance.now();
+  var yaw0=0,yawCur=null,dirty=true,wasMoving=false,last=performance.now();
   function frame(now){
     requestAnimationFrame(frame);
     if(!ready||!W)return;
@@ -92,18 +92,22 @@
     if(yawCur===null)yawCur=target;
     var diff=target-yawCur,spinning=Math.abs(diff)>0.0004;
     if(spinning)yawCur+=diff*Math.min(1,dt*6);else yawCur=target;
-    if(!spinning&&!moving&&!dirty)return;
+    var inMotion=spinning||moving;
+    if(wasMoving&&!inMotion)dirty=true;            /* one last full-detail frame when it settles */
+    wasMoving=inMotion;
+    if(!inMotion&&!dirty)return;
     dirty=false;
+    var sd=inMotion?stp:1;
     var yaw=yawCur;
     var cyw=Math.cos(yaw),syw=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
-    var X=G.X,Y=G.Y,Dp=G.Dp,R=G.R,Cb=G.Cb,n=0,dmin=1e9,dmax=-1e9,i,x,y,z,xs,d0,lm=1.12+0.22*(stp-1);
-    for(i=0;i<H.nP;i+=stp){x=D.px[i];y=D.py[i];z=D.pz[i];xs=x*cyw-y*syw;d0=x*syw+y*cyw;
+    var X=G.X,Y=G.Y,Dp=G.Dp,R=G.R,Cb=G.Cb,n=0,dmin=1e9,dmax=-1e9,i,x,y,z,xs,d0,lm=sd>1?1.12+0.22*(sd-1):1.0;
+    for(i=0;i<H.nP;i+=sd){x=D.px[i];y=D.py[i];z=D.pz[i];xs=x*cyw-y*syw;d0=x*syw+y*cyw;
       X[n]=xs;Y[n]=z*cp-d0*sp;Dp[n]=z*sp+d0*cp;R[n]=D.pr[i]*lm;Cb[n]=D.pc[i];n++}
-    for(i=0;i<H.nG;i+=stp){if(hidden[D.Gs[i]])continue;x=D.gx[i];y=D.gy[i];z=D.gz[i];xs=x*cyw-y*syw;d0=x*syw+y*cyw;
+    for(i=0;i<H.nG;i+=sd){if(hidden[D.Gs[i]])continue;x=D.gx[i];y=D.gy[i];z=D.gz[i];xs=x*cyw-y*syw;d0=x*syw+y*cyw;
       X[n]=xs;Y[n]=z*cp-d0*sp;Dp[n]=z*sp+d0*cp;R[n]=D.gr[i]*lm;Cb[n]=3;n++}
     for(var fk in fabs){var F=fabs[fk];if(F.e<0.01)continue;
       var off=(1-F.e)*7,ox=Math.cos(F.phi)*off,oy=Math.sin(F.phi)*off;
-      for(i=0;i<F.n;i+=stp){x=F.x[i]+ox;y=F.y[i]+oy;z=F.z[i];xs=x*cyw-y*syw;d0=x*syw+y*cyw;
+      for(i=0;i<F.n;i+=sd){x=F.x[i]+ox;y=F.y[i]+oy;z=F.z[i];xs=x*cyw-y*syw;d0=x*syw+y*cyw;
         X[n]=xs;Y[n]=z*cp-d0*sp;Dp[n]=z*sp+d0*cp;R[n]=F.r[i]*lm;Cb[n]=F.c[i];n++}}
     for(i=0;i<n;i++){if(Dp[i]<dmin)dmin=Dp[i];if(Dp[i]>dmax)dmax=Dp[i]}
     var ord=G.order;ord.length=n;for(i=0;i<n;i++)ord[i]=i;
@@ -118,8 +122,8 @@
       lv=Math.round(Math.round(u*6)/6*32);                       /* banded shading */
       ctx.beginPath();ctx.arc(ox,oy,rr,0,6.2832);ctx.fillStyle=COL[Cb[it]][lv];ctx.fill()}
     /* adaptive quality: keep the spin smooth on slower machines */
-    var ms=performance.now()-now;ema=ema*0.9+ms*0.1;
-    if(now-lastAdj>1200){if(ema>20&&stp<4){stp++;lastAdj=now}else if(ema<7&&stp>1&&!moving){stp--;lastAdj=now}}
+    if(inMotion){var ms=performance.now()-now;ema=ema*0.9+ms*0.1}
+    if(inMotion&&now-lastAdj>1200){if(ema>20&&stp<4){stp++;lastAdj=now}else if(ema<7&&stp>1&&!moving){stp--;lastAdj=now}}
   }
 
   var req=null;window.EnvViewer={setFab:function(k){req=k||null},info:function(){var o={ext:G&&G.ext,gw:D&&D.gw,h:D&&D.height,fabs:{}};for(var k in fabs)o.fabs[k]=fabs[k].rb;return o}};
