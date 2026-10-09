@@ -11,7 +11,7 @@
   function fallback(why){
     if(why)console.warn('Env viewer: using CPU renderer ('+why+')');
     var nc=cv.cloneNode(false);cv.parentNode.replaceChild(nc,cv);
-    var s=document.createElement('script');s.src='assets/env-viewer-cpu.js?v=9';document.head.appendChild(s);
+    var s=document.createElement('script');s.src='assets/env-viewer-cpu.js?v=10';document.head.appendChild(s);
   }
   var probe=document.createElement('canvas'),ok=false;
   try{ok=!!probe.getContext('webgl2')}catch(e){}
@@ -52,17 +52,18 @@
   ' oC=vec4(vBase*f,uFlag>0.5?0.99:1.0);}';
   var PVS='#version 300 es\nvoid main(){vec2 v=vec2(float((gl_VertexID<<1)&2),float(gl_VertexID&2));gl_Position=vec4(v*2.0-1.0,0.0,1.0);}';
   var PFS='#version 300 es\nprecision highp float;precision highp int;\n'+
-  'uniform sampler2D uC;uniform sampler2D uD;uniform int uT;uniform float uThr;uniform vec3 uSil;uniform vec3 uInn;\n'+
+  'uniform sampler2D uC;uniform sampler2D uD;uniform int uT;uniform float uThr;uniform float uFadeW;uniform vec3 uSil;uniform vec3 uInn;\n'+
   'out vec4 o;\n'+
   'void main(){ivec2 p=ivec2(gl_FragCoord.xy);ivec2 sz=textureSize(uC,0);\n'+
   ' float d=texelFetch(uD,p,0).r;if(d>=0.99999){o=vec4(0.0);return;}\n'+
-  ' vec4 c=texelFetch(uC,p,0);if(c.a<0.995){o=vec4(c.rgb,1.0);return;}\n'+
+  ' float fd=smoothstep(0.0,uFadeW,float(min(p.x,sz.x-1-p.x)))*smoothstep(0.0,uFadeW,float(min(p.y,sz.y-1-p.y)));\n'+
+  ' vec4 c=texelFetch(uC,p,0);if(c.a<0.995){o=vec4(c.rgb*fd,fd);return;}\n'+
   ' int e=0;ivec2 offs[4]=ivec2[4](ivec2(uT,0),ivec2(-uT,0),ivec2(0,uT),ivec2(0,-uT));\n'+
   ' for(int i=0;i<4;i++){ivec2 q=p+offs[i];\n'+
   '  if(q.x<0||q.y<0||q.x>=sz.x||q.y>=sz.y){e=1;continue;}\n'+
   '  float dn=texelFetch(uD,q,0).r;\n'+
   '  if(dn>=0.99999){e=1;}else if(e==0&&d-dn>uThr){if(texelFetch(uC,q,0).a>0.995)e=2;}}\n'+
-  ' if(e==1)o=vec4(uSil,1.0);else if(e==2)o=vec4(uInn,1.0);else o=vec4(c.rgb,1.0);}';
+  ' vec3 col=(e==1)?uSil:((e==2)?uInn:c.rgb);o=vec4(col*fd,fd);}';
 
   function sh(type,src){var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);
     if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s}
@@ -194,7 +195,7 @@
     gl.useProgram(post);
     gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,texC);gl.uniform1i(UP.uC,0);
     gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,texD);gl.uniform1i(UP.uD,1);
-    gl.uniform1i(UP.uT,Math.max(1,Math.round(DPRc*0.9)));gl.uniform1f(UP.uThr,EDGE_THR/(2*zr));
+    gl.uniform1i(UP.uT,Math.max(1,Math.round(DPRc*0.9)));gl.uniform1f(UP.uThr,EDGE_THR/(2*zr));gl.uniform1f(UP.uFadeW,0.15*Math.min(cw,ch*0.75));
     gl.uniform3f(UP.uSil,OUT_SIL[0]/255,OUT_SIL[1]/255,OUT_SIL[2]/255);gl.uniform3f(UP.uInn,OUT_IN[0]/255,OUT_IN[1]/255,OUT_IN[2]/255);
     gl.bindVertexArray(vaoEmpty);gl.drawArrays(gl.TRIANGLES,0,3);
   }
@@ -226,7 +227,7 @@
     prog=program(VS,FS);post=program(PVS,PFS);
     U=locs(prog,['uRot','uOff','uScale','uVP','uZR','uCue','uLight','uFlag']);
     U.uPal=gl.getUniformLocation(prog,'uPal');
-    UP=locs(post,['uC','uD','uT','uThr','uSil','uInn']);
+    UP=locs(post,['uC','uD','uT','uThr','uFadeW','uSil','uInn']);
     gl.useProgram(prog);
     var pal=new Float32Array(21);for(var pi=0;pi<7;pi++){pal[pi*3]=PAL[pi][0]/255;pal[pi*3+1]=PAL[pi][1]/255;pal[pi*3+2]=PAL[pi][2]/255}
     gl.uniform3fv(U.uPal,pal);

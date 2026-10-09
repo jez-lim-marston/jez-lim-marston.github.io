@@ -179,6 +179,14 @@
       lv=Math.min(BANDS-1,(Ls[idx]*BANDS/256)|0);
       dl=Math.max(0,Math.min(DEPTHS-1,(((zc0-dmin)/span)*DEPTHS)|0));
       u32[idx]=LUT[c][lv*DEPTHS+dl]}}
+    /* soft fade toward the panel edges instead of a hard crop */
+    var zone=Math.max(2,Math.round(0.15*Math.min(bw,bh*0.75))),fxx,fa,col;
+    for(yy=0;yy<bh;yy++){row=yy*bw;
+      var fyy=Math.min(yy,bh-1-yy)/zone;fyy=fyy>=1?1:fyy*fyy*(3-2*fyy);
+      for(xx=0;xx<bw;xx++){
+        if(xx>=zone&&xx<bw-zone){if(fyy>=1){xx=bw-zone-1;continue}}
+        fxx=Math.min(xx,bw-1-xx)/zone;fxx=fxx>=1?1:fxx*fxx*(3-2*fxx);fa=fxx*fyy;
+        if(fa<1){col=u32[row+xx];if(col){u32[row+xx]=((Math.round(255*fa)<<24)|(col&0xFFFFFF))>>>0}}}}
     offCtx.putImageData(img,0,0);
     ctx.clearRect(0,0,cv.width,cv.height);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
     ctx.drawImage(off,0,0,bw,bh,0,0,cv.width,cv.height);
