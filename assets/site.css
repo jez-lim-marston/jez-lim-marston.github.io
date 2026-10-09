@@ -63,6 +63,7 @@ section{padding:7vh 0 6vh;border-top:1px solid var(--line)}
 .pub:first-of-type{border-top:0;padding-top:0}
 .pub .title{font:600 1.1rem/1.3 var(--serif)}
 .pub .cite{color:var(--muted);font-size:14.5px}
+.pub .cite strong,.keypaper strong{color:var(--ink);font-weight:700}
 .pub .venue{font-style:italic}
 
 /* contact + links */
