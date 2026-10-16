@@ -83,6 +83,7 @@
   .indep .lbl{display:block;font:500 11.5px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
   .indep .k span{background:transparent;border:1px solid var(--line);color:var(--muted)}
 
+  .portrait{float:right;width:168px;height:168px;border-radius:50%;object-fit:cover;margin:6px 0 14px 28px;border:1px solid var(--line)}
   footer{position:relative;z-index:1;padding:30px max(24px,3vw) 50px;color:var(--muted);font-size:13.5px}
 
   /* narrower screens: viewer becomes a soft backdrop */
@@ -100,6 +101,7 @@
     .top a.hide-sm{display:none}
   }
   .top a .sm{display:none}
+  @media (max-width:560px){.portrait{float:none;display:block;width:128px;height:128px;margin:2px 0 18px}}
   @media (max-width:560px){.top .in{flex-wrap:nowrap;gap:15px}.top a{font-size:14px}.top a .lg{display:none}.top a .sm{display:inline}}
   @media (max-width:400px){.top .in{gap:11px;padding:0 16px}.top a{font-size:13px}.top .brand{font-size:15px}}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -209,6 +211,7 @@
 <section id="about" data-fab="o22" data-label="35O22 Fab &middot; gp120-gp41 interface">
   <div class="col">
     <h2>About.</h2>
+    <img class="portrait" src="assets/headshot.jpg" width="168" height="168" alt="Portrait of Dr. Jez Lim Marston">
     <p>I am a physician-scientist who applies computational biology expertise to study virology and immunology. My research asks how viruses, and the virus-derived elements in our genomes, influence immune cell function and drive its dysregulation, using gene expression at single-cell resolution, from endogenous retroviruses in the immune system to EBV and HIV in lymphoma.</p>
     <p>I work hands-on under BSL-2+ conditions with HIV-1, EBV, and SARS-CoV-2. That, together with daily use of AI tools, has given me a practical sense of how AI lowers the barrier to dual-use work. I believe AI can meaningfully advance biomedicine, and that doing so safely depends on people who understand both the biology and the tools.</p>
     <p>I am interested in roles evaluating and mitigating biological risk in frontier AI systems, and more broadly in computational virology, immunology, and translational biotechnology.</p>
